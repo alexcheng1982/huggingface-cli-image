@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: hf-cli
+  IMAGE_NAME: alexcheng1982/hf-cli
 
 jobs:
   build-and-push-image:
@@ -31,7 +31,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=latest
+            type=raw,value=${{ github.event.release.name }}
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v6
