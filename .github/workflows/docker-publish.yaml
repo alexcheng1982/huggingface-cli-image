@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: alexcheng1982/hf-cli
+  IMAGE_NAME: alexcheng1982/model-downloader
 
 jobs:
   build-and-push-image:
@@ -39,6 +39,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=${{ github.event.release.name }}
+            type=raw,value=latest
       - name: Build and push Docker image
         id: push
         uses: docker/build-push-action@v6
@@ -48,11 +49,4 @@ jobs:
           platforms: linux/amd64, linux/arm64, linux/arm/v7
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-      - name: Generate artifact attestation
-        uses: actions/attest-build-provenance@v2
-        with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
-          subject-digest: ${{ steps.push.outputs.digest }}
-          push-to-registry: true
 

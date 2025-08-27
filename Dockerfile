@@ -20,6 +20,4 @@ WORKDIR /app
 
 COPY --from=build /install /usr/local
 
-COPY . .
-
 CMD ["hf"]
