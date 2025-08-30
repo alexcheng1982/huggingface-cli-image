@@ -16,7 +16,8 @@ RUN pip install --prefix=/install --no-cache-dir -r requirements.txt
 
 FROM python:3.12-alpine
 
-WORKDIR /app
+ENV HF_HOME=/model-files
+ENV MODELSCOPE_CACHE=/model-files
 
 COPY --from=build /install /usr/local
 
